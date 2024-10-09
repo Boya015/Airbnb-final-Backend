@@ -1,10 +1,20 @@
 const express = require('express');
-const { createAccommodation, getAccommodations, deleteAccommodation } = require('../controllers/accommodationController');
-const auth = require('../middleware/auth');
 const router = express.Router();
+const Accommodation = require('../models/Accommodation');
 
-router.post('/', auth, createAccommodation);
-router.get('/', getAccommodations);
-router.delete('/:id', auth, deleteAccommodation);
+// CREATE: Add a new accommodation
+router.post('/accommodations', async (req, res) => {
+  console.log('Incoming Accommodation Data:', req.body);
+  const accommodation = new Accommodation(req.body);
+  try {
+    const savedAccommodation = await accommodation.save();
+    res.status(201).json(savedAccommodation);
+  } catch (error) {
+    console.error('Error saving accommodation:', error);
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Other accommodation routes (GET, PUT, DELETE) can be added here
 
 module.exports = router;

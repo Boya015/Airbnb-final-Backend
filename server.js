@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const User = require('./models/User'); 
-const accommodationRoutes = require('./routes/accommodationRoutes'); // Import the routes
+const accommodationRoutes = require('./routes/accommodationRoutes');
+const reservationRoutes = require('./routes/reservationRoutes'); // Import the routes
 const bcrypt = require('bcrypt');
 dotenv.config();
 
@@ -64,6 +65,8 @@ app.post('/api/auth/login', async (req, res) => {
   }
 });
 
+
+
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -73,6 +76,7 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // Use the accommodation routes
 app.use('/api/accommodations', accommodationRoutes);
+app.use('/api/reservations', reservationRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

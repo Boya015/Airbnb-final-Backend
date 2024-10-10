@@ -13,6 +13,6 @@ const accommodationSchema = new mongoose.Schema({
     host: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // Reference to user
 });
 
-const Accommodation = mongoose.model('Accommodation', accommodationSchema);
+const accommodation = mongoose.model('Accommodation', accommodationSchema);
 
-module.exports = Accommodation;
+module.exports = accommodation;

@@ -3,7 +3,7 @@ const router = express.Router();
 const Accommodation = require('../models/Accommodation');
 
 // CREATE: Add a new accommodation
-router.post('/accommodations', async (req, res) => {
+router.post('/api/accommodations', async (req, res) => {
   console.log('Incoming Accommodation Data:', req.body);
   const accommodation = new Accommodation(req.body);
   try {
@@ -14,7 +14,15 @@ router.post('/accommodations', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
-
+// GET all accommodations
+router.get('/api/accommodations', async (req, res) => {
+  try {
+    const accommodations = await Accommodation.find();
+    res.status(200).json(accommodations);
+  } catch (error) {
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
 // Other accommodation routes (GET, PUT, DELETE) can be added here
 
 module.exports = router;

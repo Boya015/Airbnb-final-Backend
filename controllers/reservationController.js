@@ -1,12 +1,12 @@
 const Reservation = require('../models/Reservation');
 
 const createReservation = async (req, res) => {
-  const { accommodation, startDate, endDate } = req.body;
+  const { bookedBy, property, checkin, checkout } = req.body;
   const reservation = new Reservation({
-    accommodation,
-    user: req.user._id,
-    startDate,
-    endDate,
+    bookedBy,
+    property,
+    checkin,
+    checkout
   });
 
   const savedReservation = await reservation.save();

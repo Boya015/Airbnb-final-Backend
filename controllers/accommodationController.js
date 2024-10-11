@@ -3,18 +3,15 @@ const Accommodation = require('../models/Accommodation');
 // Create accommodation
 const createAccommodation = async (req, res) => {
   try {
-    const { name, location, price, reviews, ratings, description, details, image, amenities } = req.body;
+    const { name, price, reviews, ratings, description, details, image } = req.body;
     const accommodation = new Accommodation({
       name,
+      image,
       description,
       details,
       ratings,
       reviews,
-      price,
-      image,
-      amenities,
-      location,
-      host: req.user._id, // Assuming req.user._id comes from authentication middleware
+      price
     });
 
     const savedAccommodation = await accommodation.save();

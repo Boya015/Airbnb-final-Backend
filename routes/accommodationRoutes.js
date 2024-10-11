@@ -1,9 +1,9 @@
 const express = require('express');
-const router = express.Router();
 const Accommodation = require('../models/Accommodation');
+const router = express.Router();
 
 // CREATE: Add a new accommodation
-router.post('/api/accommodations', async (req, res) => {
+router.post('/', async (req, res) => {
   console.log('Incoming Accommodation Data:', req.body);
   const accommodation = new Accommodation(req.body);
   try {
@@ -15,7 +15,7 @@ router.post('/api/accommodations', async (req, res) => {
   }
 });
 // GET all accommodations
-router.get('/api/accommodations', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const accommodations = await Accommodation.find();
     res.status(200).json(accommodations);

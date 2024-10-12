@@ -14,6 +14,20 @@ router.post('/', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+
+router.delete('/', async (req, res) => {
+  try {
+    const accommodation = await Accommodation.findByIdAndDelete(req.params.id);
+    if (!accommodation) {
+      return res.status(404).json({ message: 'Hotel not found' });
+    }
+    res.json({ message: 'Hotel deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error: Unable to delete hotel', error });
+  }
+});
+
+
 // GET all accommodations
 router.get('/', async (req, res) => {
   try {

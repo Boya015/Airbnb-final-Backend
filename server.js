@@ -41,27 +41,23 @@ app.post('/api/auth/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
-      // Find the user by username
-      const user = await User.findOne({ username });
-      if (!user) {
-          return res.status(404).json({ message: 'User not found' });
-      }
+    // Find the user by username
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
 
-      // Check if the password is correct
-      const isMatch = await user.comparePassword(password);
-      if (!isMatch) {
-          return res.status(400).json({ message: 'Invalid credentials' });
-      }
+    // Check if the password is correct
+    await user.comparePassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
 
-      // Optionally, generate a JWT token for authentication
-      const token = jwt.sign({ id: user._id, username: user.username }, 'your_jwt_secret', {
-          expiresIn: '1h', // Token expiry time
-      });
-
-      res.json({ message: 'Login successful', token });
+    // Generate a JWT token or continue with your login flow
+    res.status(200).json({ message: 'Login successful' });
   } catch (error) {
-      console.error('Error during login:', error);
-      res.status(500).json({ message: 'Server error' });
+    console.error('Error during login:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -70,6 +66,7 @@ app.post('/api/auth/login', async (req, res) => {
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  connectTimeoutMS: 20000,
 })
   .then(() => console.log('MongoDB connected'))
   .catch((error) => console.log(error));

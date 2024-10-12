@@ -11,11 +11,11 @@ const generateToken = (id) => {
 
 // Login user and issue JWT
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
     // Find user by email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
 
     // Check if user exists and password matches
     if (user && (await bcrypt.compare(password, user.password))) {
